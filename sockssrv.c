@@ -194,7 +194,14 @@ static int connect_socks_target(unsigned char *buf, size_t n, struct client *cli
 		af = SOCKADDR_UNION_AF(&client->addr);
 		void *ipdata = SOCKADDR_UNION_ADDRESS(&client->addr);
 		inet_ntop(af, ipdata, clientname, sizeof clientname);
-		dolog("client[%d] %s: connected to %s:%d\n", client->fd, clientname, namebuf, port);
+		time_t currentTime = time(NULL);
+
+		      struct tm *localTime = localtime(&currentTime);
+		    
+		      char timeString[100];
+		      strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", localTime);
+		   
+		dolog("client[%d] %s: %s connected to %s:%d\n", client->fd, clientname,timeString, namebuf, port);
 	}
 	return fd;
 }
